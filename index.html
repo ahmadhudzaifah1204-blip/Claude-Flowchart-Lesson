@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flowchart Interaktif · Informatika Kelas X</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1b2333;--mu:#5b6578;--bd:#d9deea;--ac:#2563eb;--ac2:#dbe7ff;--ok:#16794a;--okb:#dcf5e8;--er:#b42318;--erb:#fde4e1;--nd:#eef2ff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10141f;--card:#1a2030;--tx:#e8ecf5;--mu:#9aa5bb;--bd:#2c3550;--ac:#6ea0ff;--ac2:#22345f;--ok:#6fdba2;--okb:#16372a;--er:#ff9b90;--erb:#43201d;--nd:#222a40;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10141f;--card:#1a2030;--tx:#e8ecf5;--mu:#9aa5bb;--bd:#2c3550;--ac:#6ea0ff;--ac2:#22345f;--ok:#6fdba2;--okb:#16372a;--er:#ff9b90;--erb:#43201d;--nd:#222a40;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:820px;margin:0 auto;padding:16px}
+h1{font-size:1.4rem;margin:4px 0}
+.sub{color:var(--mu);margin:0 0 12px;font-size:.92rem}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.tab{flex:0 0 auto;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:9px 14px;border-radius:999px;font:inherit;font-size:.92rem;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ac);border-color:var(--ac);color:#fff}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-top:12px}
+.card h2{font-size:1.1rem;margin:0 0 6px}
+.hint{color:var(--mu);font-size:.9rem;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px}
+.sym{border:1px solid var(--bd);background:var(--nd);color:var(--tx);border-radius:12px;padding:8px;font:inherit;font-size:.85rem;cursor:pointer;text-align:center}
+.sym[aria-pressed="true"]{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac)}
+.sym svg{width:70px;height:52px;display:block;margin:0 auto 4px}
+.sym svg *{fill:var(--card);stroke:var(--mu);stroke-width:2}
+.sym svg line{fill:none}.sym svg .ah{fill:var(--mu)}
+.detail{margin-top:10px;padding:12px;border-radius:12px;background:var(--ac2)}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:10px 16px;font:inherit;cursor:pointer}
+.btn.alt{background:var(--nd);color:var(--tx);border:1px solid var(--bd)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input[type=number]{font:inherit;padding:9px 10px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);width:170px}
+.fc{overflow-x:auto;margin-top:10px}
+.fc svg{width:100%;max-width:430px;display:block;margin:0 auto}
+.nd rect,.nd polygon{fill:var(--nd);stroke:var(--mu);stroke-width:1.5}
+.nd text{fill:var(--tx);font-size:12px;text-anchor:middle;dominant-baseline:middle}
+.nd.on rect,.nd.on polygon{fill:var(--ac2);stroke:var(--ac);stroke-width:3}
+.nd path,.nd circle,.nd ellipse{fill:var(--nd);stroke:var(--mu);stroke-width:1.5}
+.nd line{stroke:var(--mu);stroke-width:1.5}
+.nd.on path,.nd.on circle,.nd.on ellipse{fill:var(--ac2);stroke:var(--ac);stroke-width:3}
+.nd.on line{stroke:var(--ac);stroke-width:2}
+.ed{fill:none;stroke:var(--mu);stroke-width:1.5;marker-end:url(#ar)}
+.ed.on{stroke:var(--ac);stroke-width:3}
+.lb{fill:var(--mu);font-size:11px}
+.log{margin:10px 0 0;padding-left:20px;font-size:.92rem}
+.res{margin-top:10px;padding:12px;border-radius:12px;background:var(--okb);color:var(--ok);font-weight:600}
+.pool,.ans{display:flex;flex-wrap:wrap;gap:8px;min-height:48px;padding:8px;border:1px dashed var(--bd);border-radius:12px;margin:6px 0 12px}
+.chip{border:1px solid var(--bd);background:var(--nd);color:var(--tx);border-radius:10px;padding:8px 12px;font:inherit;font-size:.92rem;cursor:pointer;text-align:left}
+.chip small{display:block;color:var(--mu);font-size:.75rem}
+.chip.ok{background:var(--okb);border-color:var(--ok)}.chip.er{background:var(--erb);border-color:var(--er)}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;border:1px solid var(--bd);background:var(--nd);color:var(--tx);border-radius:10px;padding:10px 12px;font:inherit;cursor:pointer}
+.opt.ok{background:var(--okb);border-color:var(--ok)}.opt.er{background:var(--erb);border-color:var(--er)}
+.fb{margin:8px 0;font-size:.92rem}
+.bar{height:8px;background:var(--bd);border-radius:99px;overflow:hidden;margin-bottom:10px}
+.bar i{display:block;height:100%;background:var(--ac);width:0;transition:width .3s}
+footer{color:var(--mu);font-size:.8rem;text-align:center;margin:18px 0 4px}
+.gtab{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:7px 12px;border-radius:999px;font:inherit;font-size:.85rem;cursor:pointer}
+.gtab[aria-selected="true"]{background:var(--ac);border-color:var(--ac);color:#fff}
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mcol{display:grid;gap:8px;align-content:start}
+.mt .chip{min-height:66px;display:flex;align-items:center}
+.sym.selc,.chip.selc{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac)}
+.sym.okc,.chip.okc{background:var(--okb);border-color:var(--ok)}
+.sym.erc,.chip.erc{background:var(--erb);border-color:var(--er)}
+.sym.st{display:flex;align-items:center;gap:10px;text-align:left;width:100%}
+.sym.st svg{width:48px;height:36px;margin:0;flex:0 0 auto}
+.ck label{display:flex;gap:8px;align-items:flex-start;padding:6px 0;cursor:pointer}
+.ck input{margin-top:5px}
+.tp{display:block;width:100%;margin:6px 0}
+.lg{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.lg span{font-size:.72rem;border:1px solid var(--bd);border-radius:999px;padding:2px 8px;color:var(--mu)}
+.lg span.seen{border-color:var(--ac);color:var(--tx);background:var(--ac2)}
+.sel{font:inherit;padding:9px 10px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
+.ed2{fill:none;stroke:var(--mu);stroke-width:1.5;marker-end:url(#ar2)}
+.ed2.on{stroke:var(--ac);stroke-width:3}
+.an path{fill:none;stroke:var(--mu);stroke-width:1.5}
+.an.on path{stroke:var(--ac);stroke-width:3}
+.an text{fill:var(--tx);font-size:11px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Flowchart Interaktif</h1>
+<p class="sub">Informatika (Coding) · Kelas X · Belajar simbol, menelusuri alur, menyusun, dan berlatih.</p>
+<div class="tabs" role="tablist">
+<button class="tab" role="tab" data-t="p1" aria-selected="true">1. Kenali Simbol</button>
+<button class="tab" role="tab" data-t="p2" aria-selected="false">2. Simulasi Alur</button>
+<button class="tab" role="tab" data-t="p5" aria-selected="false">3. Simulasi 16 Simbol</button>
+<button class="tab" role="tab" data-t="p3" aria-selected="false">4. Game Flowchart</button>
+<button class="tab" role="tab" data-t="p4" aria-selected="false">5. Kuis</button>
+<button class="tab" role="tab" data-t="p6" aria-selected="false">6. Proyek Mandiri</button>
+</div>
+
+<section id="p1" class="card">
+<h2>Kenali 16 simbol flowchart</h2>
+<p class="hint">Ketuk setiap simbol untuk melihat nama (Indonesia dan Inggris), fungsi, dan contohnya. Enam simbol pertama paling sering dipakai di kelas.</p>
+<div class="grid" id="symgrid"></div>
+<div class="detail" id="symdet">Pilih salah satu simbol di atas.</div>
+</section>
+
+<section id="p2" class="card" hidden>
+<h2>Simulasi: sistem diskon koperasi</h2>
+<p class="hint">Diskon 10% bila belanja ≥ Rp100.000; diskon 5% bila ≥ Rp50.000; selain itu tanpa diskon. Masukkan total belanja lalu lihat jalur yang dilewati.</p>
+<div class="row">
+<input type="number" id="amt" min="0" step="1000" placeholder="Total belanja (Rp)" inputmode="numeric">
+<button class="btn" id="go">Jalankan</button>
+<button class="btn alt" data-v="30000">30.000</button>
+<button class="btn alt" data-v="75000">75.000</button>
+<button class="btn alt" data-v="120000">120.000</button>
+</div>
+<div class="fc" id="fc"></div>
+<ol class="log" id="log"></ol>
+<div class="res" id="res" hidden></div>
+</section>
+
+<section id='p6' class='card' hidden>
+<h2>Proyek mandiri: merancang flowchart masalah sehari-hari</h2>
+<p class='hint'>Dikerjakan <strong>di buku masing-masing</strong> dengan tulisan tangan, lalu dikumpulkan pada pertemuan berikutnya. Waktu pengerjaan sekitar 40-60 menit.</p>
+<strong>1. Pilih satu topik</strong>
+<div id='tps'></div>
+<div class='row' style='margin-top:8px'><button class='btn alt' id='tprnd'>Bantu pilih topik acak</button></div>
+<div class='detail' id='tpdet'>Ketuk satu topik untuk melihat aturan yang harus Anda buat flowchart-nya.</div>
+<strong style='display:block;margin-top:14px'>2. Isi buku Anda (centang bila sudah)</strong>
+<div class='ck' id='ck'></div>
+<p class='fb' id='ckp'></p>
+<strong>3. Cara dinilai</strong>
+<p class='hint'>Lima aspek, masing-masing skor 1-4: identifikasi Input-Proses-Output, ketepatan simbol, logika alur, pengujian, serta kerapian dan refleksi. Nilai = skor / 20 × 100. Gambar simbol dengan penggaris agar rapi.</p>
+</section>
+
+<section id='p5' class='card' hidden>
+<h2>Simulasi lengkap: kasir koperasi (16 simbol)</h2>
+<p class='hint'>Satu alur memakai ke-16 simbol. Isi data lalu jalankan: jalur menyala di diagram, dan simbol yang dilewati menyala di daftar.</p>
+<div class='row'>
+<input type='number' id='m-tot' value='75000' min='0' step='1000' inputmode='numeric' placeholder='Total belanja (Rp)' aria-label='Total belanja'>
+<select class='sel' id='m-ang' aria-label='Status anggota'><option value='1'>Anggota</option><option value='0'>Bukan anggota</option></select>
+<input type='number' id='m-uang' value='100000' min='0' step='1000' inputmode='numeric' placeholder='Uang diterima (Rp)' aria-label='Uang diterima'>
+<button class='btn' id='m-go'>Jalankan</button>
+</div>
+<div class='row' style='margin-top:8px'>
+<button class='btn alt' data-p='75000,1,100000'>Anggota, 75.000</button>
+<button class='btn alt' data-p='120000,0,150000'>Bukan anggota, 120.000</button>
+<button class='btn alt' data-p='30000,0,20000'>Uang kurang</button>
+</div>
+<div class='lg' id='lg'></div>
+<div class='fc' id='fc2'></div>
+<ol class='log' id='log2'></ol>
+<div class='res' id='res2' hidden></div>
+</section>
+
+<section id="p3" class="card" hidden>
+<div class='row' style='margin-bottom:10px'>
+<button class='gtab' data-g='g1' aria-selected='true'>Game 1: Susun Alur</button>
+<button class='gtab' data-g='g2' aria-selected='false'>Game 2: Pasangkan Simbol</button>
+<button class='gtab' data-g='g3' aria-selected='false'>Game 3: Cari Kesalahan</button>
+</div>
+<div id='g1'><h2>Game 1: Susun alur yang benar</h2>
+<p class='hint'><strong id='sprob'></strong> Ketuk kartu untuk memindahkannya ke urutan jawaban; ketuk lagi untuk mengembalikan.</p>
+<strong>Kartu langkah</strong>
+<div class="pool" id="pool"></div>
+<strong>Urutan jawaban Anda</strong>
+<div class="ans" id="ans"></div>
+<div class="row"><button class="btn" id="chk">Periksa</button><button class="btn alt" id="rst">Soal baru</button></div>
+<p class="fb" id="sfb"></p>
+</div>
+<div id='g2' hidden>
+<h2>Game 2: Pasangkan simbol</h2>
+<p class='hint'>Ketuk satu simbol di kiri, lalu ketuk namanya di kanan. Pasangkan semua tanpa salah.</p>
+<div class='mt'><div class='mcol' id='mL'></div><div class='mcol' id='mR'></div></div>
+<p class='fb' id='mfb'></p>
+<button class='btn alt' id='mrst'>Acak ulang</button>
+</div>
+<div id='g3' hidden>
+<h2>Game 3: Cari kesalahan</h2>
+<p class='hint'>Setiap flowchart di bawah memiliki satu kesalahan (simbol salah atau urutan salah). Ketuk langkah yang salah.</p>
+<div id='ebox'></div>
+</div>
+</section>
+
+<section id="p4" class="card" hidden>
+<h2>Kuis latihan</h2>
+<div class="bar"><i id="qb"></i></div>
+<div id="qbox"></div>
+</section>
+
+<footer>Media pembelajaran · Ahmad Hudzaifah, S.Kom</footer>
+</div>
+
+<script>
+const $=s=>document.querySelector(s);
+const rp=n=>"Rp"+Math.round(n).toLocaleString("id-ID");
+
+// Tabs
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-selected",x===b));
+  ["p1","p2","p3","p4","p5","p6"].forEach(id=>$("#"+id).hidden=id!==b.dataset.t);
+});
+
+// 1. Symbols
+const SYM=[
+ {n:"Terminator",en:"Terminator / Start-End",f:"Menandai awal (Mulai) dan akhir (Selesai) alur. Setiap flowchart punya satu awal dan satu akhir.",e:"Mulai, Selesai",s:'<rect x="6" y="14" width="68" height="32" rx="16"/>'},
+ {n:"Proses",en:"Process",f:"Menyatakan perhitungan atau pengolahan data.",e:"luas = panjang × lebar",s:'<rect x="8" y="12" width="64" height="36"/>'},
+ {n:"Input/Output",en:"Input/Output",f:"Menyatakan data masukan dari pengguna atau hasil keluaran ke layar.",e:"Input nilai; Output “Lulus”",s:'<polygon points="22,12 74,12 58,48 6,48"/>'},
+ {n:"Keputusan",en:"Decision",f:"Mengecek kondisi. Selalu memiliki dua jalur keluar berlabel “Ya” dan “Tidak”.",e:"nilai ≥ 75 ?",s:'<polygon points="40,4 76,30 40,56 4,30"/>'},
+ {n:"Arah alir",en:"Flowline",f:"Panah yang menghubungkan simbol dan menunjukkan urutan langkah.",e:"Dari Input ke Proses",s:'<line x1="6" y1="30" x2="58" y2="30"/><polygon class="ah" points="74,30 56,22 56,38"/>'},
+ {n:"Konektor",en:"On-page Connector",f:"Menyambung bagian alur yang terpisah dalam satu halaman agar garis tidak saling bersilangan.",e:"Lingkaran bertanda A (pasangannya juga A)",s:'<circle cx="40" cy="30" r="18"/>'},
+ {n:"Konektor Antar Halaman",en:"Off-page Connector",f:"Menyambung alur ke halaman lain bila flowchart tidak muat dalam satu halaman.",e:"Pentagon bertanda 1, lanjut di halaman 2",s:'<polygon points="14,10 66,10 66,38 40,52 14,38"/>'},
+ {n:"Proses Terdefinisi",en:"Predefined Process",f:"Memanggil prosedur atau sub-program yang sudah didefinisikan dan alurnya digambar terpisah.",e:"HitungDiskon()",s:'<rect x="8" y="12" width="64" height="36"/><line x1="16" y1="12" x2="16" y2="48"/><line x1="64" y1="12" x2="64" y2="48"/>'},
+ {n:"Persiapan",en:"Preparation",f:"Menyiapkan nilai awal variabel atau pengaturan awal, misalnya inisialisasi perulangan.",e:"i = 1 sampai 10",s:'<polygon points="6,30 22,12 58,12 74,30 58,48 22,48"/>'},
+ {n:"Input Manual",en:"Manual Input",f:"Data dimasukkan langsung oleh pengguna lewat papan ketik saat proses berjalan.",e:"Ketik nama pengguna",s:'<polygon points="6,22 74,10 74,48 6,48"/>'},
+ {n:"Operasi Manual",en:"Manual Operation",f:"Langkah yang dikerjakan manusia secara manual, tidak otomatis oleh komputer.",e:"Petugas memeriksa berkas",s:'<polygon points="6,12 74,12 62,48 18,48"/>'},
+ {n:"Dokumen",en:"Document",f:"Menyatakan data atau hasil dalam bentuk dokumen cetak.",e:"Cetak struk belanja",s:'<path d="M8,10 H72 V40 C58,32 52,50 40,44 C28,38 20,50 8,42 Z"/>'},
+ {n:"Tampilan",en:"Display",f:"Menampilkan hasil atau informasi pada layar monitor.",e:"Tampilkan total bayar",s:'<path d="M6,30 L20,12 H54 Q76,12 76,30 Q76,48 54,48 H20 Z"/>'},
+ {n:"Penyimpanan Data",en:"Database / Stored Data",f:"Menyimpan data ke, atau mengambil data dari, basis data.",e:"Simpan data siswa",s:'<path d="M12,16 V44 C12,54 68,54 68,44 V16"/><ellipse cx="40" cy="16" rx="28" ry="8"/>'},
+ {n:"Penundaan",en:"Delay",f:"Menunggu selama waktu tertentu sebelum melanjutkan ke langkah berikutnya.",e:"Tunggu 5 detik",s:'<path d="M8,12 H40 A18,18 0 0 1 40,48 H8 Z"/>'},
+ {n:"Anotasi",en:"Annotation / Comment",f:"Memberi catatan atau penjelasan tambahan pada simbol tanpa mengubah alur.",e:"Catatan: diskon hanya untuk anggota",s:'<path d="M30,10 H18 V50 H30" style="fill:none"/><path d="M18,30 H72" style="fill:none;stroke-dasharray:4 3"/>'}
+];
+const g=$("#symgrid");
+SYM.forEach((y,i)=>{
+  const b=document.createElement("button");b.className="sym";b.setAttribute("aria-pressed","false");
+  b.innerHTML=`<svg viewBox="0 0 80 60">${y.s}</svg>${y.n}`;
+  b.onclick=()=>{g.querySelectorAll(".sym").forEach(x=>x.setAttribute("aria-pressed",x===b));
+    $("#symdet").innerHTML=`<strong>${y.n}</strong> <span style="color:var(--mu)">(${y.en})</span><br>${y.f}<br><em>Contoh isi: ${y.e}</em>`};
+  g.appendChild(b);
+});
+
+// 2. Simulation
+const T=(id,cx,cy,w,t)=>`<g class="nd" id="${id}"><rect x="${cx-w/2}" y="${cy-18}" width="${w}" height="36" rx="18"/><text x="${cx}" y="${cy}">${t}</text></g>`;
+const R=(id,cx,cy,w,t)=>`<g class="nd" id="${id}"><rect x="${cx-w/2}" y="${cy-18}" width="${w}" height="36" rx="3"/><text x="${cx}" y="${cy}">${t}</text></g>`;
+const P=(id,cx,cy,w,t)=>`<g class="nd" id="${id}"><polygon points="${cx-w/2+12},${cy-18} ${cx+w/2},${cy-18} ${cx+w/2-12},${cy+18} ${cx-w/2},${cy+18}"/><text x="${cx}" y="${cy}">${t}</text></g>`;
+const D=(id,cx,cy,w,t)=>`<g class="nd" id="${id}"><polygon points="${cx},${cy-35} ${cx+w/2},${cy} ${cx},${cy+35} ${cx-w/2},${cy}"/><text x="${cx}" y="${cy}">${t}</text></g>`;
+const E=(id,p)=>`<polyline class="ed" id="${id}" points="${p}"/>`;
+$("#fc").innerHTML=`<svg viewBox="0 0 430 570" role="img" aria-label="Flowchart sistem diskon koperasi"><defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="context-stroke"/></marker></defs>`+
+E("e1","150,46 150,72")+E("e2","150,108 150,133")+E("e3","235,168 265,168")+E("e4","150,203 150,233")+E("e5","235,268 265,268")+E("e6","150,303 150,340")+
+E("e7","395,168 410,168 410,432 245,432")+E("e8","395,268 410,268 410,432 245,432")+E("e9","150,376 150,414")+E("e10","150,450 150,472")+E("e11","150,508 150,526")+
+T("n-start",150,28,110,"Mulai")+P("n-in",150,90,150,"Input total belanja")+D("n-d1",150,168,170,"total ≥ 100.000?")+R("n-p1",330,168,130,"diskon = total × 10%")+
+D("n-d2",150,268,170,"total ≥ 50.000?")+R("n-p2",330,268,130,"diskon = total × 5%")+R("n-p3",150,358,120,"diskon = 0")+R("n-calc",150,432,190,"bayar = total − diskon")+
+P("n-out",150,490,150,"Output bayar")+T("n-end",150,544,110,"Selesai")+
+`<text class="lb" x="242" y="160">Ya</text><text class="lb" x="158" y="222">Tidak</text><text class="lb" x="242" y="260">Ya</text><text class="lb" x="158" y="324">Tidak</text></svg>`;
+
+let timers=[];
+function run(){
+  const raw=$("#amt").value, v=Number(raw);
+  timers.forEach(clearTimeout);timers=[];
+  document.querySelectorAll("#fc .on").forEach(x=>x.classList.remove("on"));
+  $("#log").innerHTML="";$("#res").hidden=true;
+  if(raw===""||!(v>=0)){$("#res").hidden=false;$("#res").textContent="Masukkan angka total belanja (0 atau lebih).";return}
+  let path=["n-start","e1","n-in","e2","n-d1"],d,pct;
+  if(v>=100000){path.push("e3","n-p1","e7");pct=10}
+  else{path.push("e4","n-d2");if(v>=50000){path.push("e5","n-p2","e8");pct=5}else{path.push("e6","n-p3","e9");pct=0}}
+  d=v*pct/100;
+  path.push("n-calc","e10","n-out","e11","n-end");
+  const L={"n-start":"Mulai","n-in":"Input total belanja = "+rp(v),
+    "n-d1":`Cek: ${rp(v)} ≥ Rp100.000? → ${v>=100000?"Ya":"Tidak"}`,
+    "n-d2":`Cek: ${rp(v)} ≥ Rp50.000? → ${v>=50000?"Ya":"Tidak"}`,
+    "n-p1":"Proses: diskon = "+rp(d),"n-p2":"Proses: diskon = "+rp(d),"n-p3":"Proses: diskon = Rp0",
+    "n-calc":"Proses: bayar = "+rp(v)+" − "+rp(d)+" = "+rp(v-d),"n-out":"Output: "+rp(v-d),"n-end":"Selesai"};
+  path.forEach((id,i)=>timers.push(setTimeout(()=>{
+    $("#"+id).classList.add("on");
+    if(L[id]){const li=document.createElement("li");li.textContent=L[id];$("#log").appendChild(li)}
+    if(i===path.length-1){$("#res").hidden=false;$("#res").textContent=`Diskon ${pct}% = ${rp(d)}. Total bayar = ${rp(v-d)}.`}
+  },i*320)));
+}
+$("#go").onclick=run;
+$("#amt").onkeydown=e=>{if(e.key==="Enter")run()};
+document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>{$("#amt").value=b.dataset.v;run()});
+
+// 2b. Full simulation (16 symbols)
+(function(){
+const N=[['start','T',110,'Mulai'],['prep','Pp',170,'total = 0; bonus = 0'],['io','IO',170,'Input total belanja'],['mop','MO',190,'Kasir cek kartu anggota'],['d1','D',170,'Anggota?'],['b0','Pr',120,'bonus = 0%'],['cA','Cn',32,'A'],['pre','Pd',190,'HitungDiskon()'],['bayar','Pr',200,'bayar = total − diskon'],['disp','Disp',190,'Tampilkan total bayar'],['minp','MI',190,'Ketik uang diterima'],['d2','D',180,'uang ≥ bayar?'],['kemb','Pr',210,'kembalian = uang − bayar'],['del','Del',170,'Tunggu 2 detik'],['doc','Doc',150,'Cetak struk'],['db','DB',180,'Simpan transaksi'],['off','Co',170,'Ke Laporan Harian (1)'],['end','T',110,'Selesai']];
+const Y=[28,82,136,190,262,335,388,440,494,548,602,674,748,802,858,916,974,1030];
+const LG=[['T','Terminator'],['Pr','Proses'],['IO','Input/Output'],['D','Keputusan'],['F','Arah alir'],['Cn','Konektor'],['Co','Konektor antar halaman'],['Pd','Proses terdefinisi'],['Pp','Persiapan'],['MI','Input manual'],['MO','Operasi manual'],['Doc','Dokumen'],['Disp','Tampilan'],['DB','Penyimpanan data'],['Del','Penundaan'],['An','Anotasi']];
+const NM=Object.fromEntries(LG),TY={b2:'Pr'};N.forEach(a=>TY[a[0]]=a[1]);
+const hh={D:35,Cn:16,DB:22,Co:20},H=t=>hh[t]||18;
+function shape(t,cx,cy,w){const l=cx-w/2,r=cx+w/2,u=cy-18,b=cy+18;switch(t){
+case 'T':return `<rect x='${l}' y='${u}' width='${w}' height='36' rx='18'/>`;
+case 'Pr':return `<rect x='${l}' y='${u}' width='${w}' height='36' rx='3'/>`;
+case 'IO':return `<polygon points='${l+12},${u} ${r},${u} ${r-12},${b} ${l},${b}'/>`;
+case 'D':return `<polygon points='${cx},${cy-35} ${r},${cy} ${cx},${cy+35} ${l},${cy}'/>`;
+case 'Cn':return `<circle cx='${cx}' cy='${cy}' r='16'/>`;
+case 'Co':return `<polygon points='${l},${u} ${r},${u} ${r},${cy+4} ${cx},${b+2} ${l},${cy+4}'/>`;
+case 'Pd':return `<rect x='${l}' y='${u}' width='${w}' height='36' rx='3'/><line x1='${l+10}' y1='${u}' x2='${l+10}' y2='${b}'/><line x1='${r-10}' y1='${u}' x2='${r-10}' y2='${b}'/>`;
+case 'Pp':return `<polygon points='${l},${cy} ${l+16},${u} ${r-16},${u} ${r},${cy} ${r-16},${b} ${l+16},${b}'/>`;
+case 'MI':return `<polygon points='${l},${cy-8} ${r},${u} ${r},${b} ${l},${b}'/>`;
+case 'MO':return `<polygon points='${l},${u} ${r},${u} ${r-14},${b} ${l+14},${b}'/>`;
+case 'Doc':return `<path d='M${l},${u}H${r}V${b-6}C${r-w*.25},${b+4} ${cx+w*.15},${b-14} ${cx},${b-6}S${l+w*.2},${b+4} ${l},${b-6}Z'/>`;
+case 'Disp':return `<path d='M${l},${cy}L${l+16},${u}H${r-18}Q${r},${u} ${r},${cy}Q${r},${b} ${r-18},${b}H${l+16}Z'/>`;
+case 'DB':return `<path d='M${l},${cy-14}V${cy+14}C${l},${cy+26} ${r},${cy+26} ${r},${cy+14}V${cy-14}'/><ellipse cx='${cx}' cy='${cy-14}' rx='${w/2}' ry='6'/>`;
+case 'Del':return `<path d='M${l},${u}H${r-18}A18,18 0 0 1 ${r-18},${b}H${l}Z'/>`}}
+let nd='',ed='';
+N.forEach((a,i)=>{nd+=`<g class='nd' id='m-${a[0]}'>${shape(a[1],150,Y[i],a[2])}<text x='150' y='${Y[i]}'>${a[3]}</text></g>`;if(i<N.length-1)ed+=`<polyline class='ed2' id='m-e${i}' points='150,${Y[i]+H(a[1])} 150,${Y[i+1]-H(N[i+1][1])}'/>`});
+nd+=`<g class='nd' id='m-b2'>${shape('Pr',330,262,120)}<text x='330' y='262'>bonus = 2%</text></g>`;
+ed+=`<polyline class='ed2' id='m-ya' points='235,262 270,262'/><polyline class='ed2' id='m-b2a' points='330,280 330,388 166,388'/><polyline class='ed2' id='m-lp' points='240,674 410,674 410,602 245,602'/>`;
+const an=`<g class='an' id='m-an'><path d='M286,424H274V456H286'/><path d='M274,440H247' style='stroke-dasharray:4 3'/><text x='292' y='430'>≥100rb: 10%</text><text x='292' y='444'>≥50rb: 5%, lainnya 0</text><text x='292' y='458'>+ bonus anggota 2%</text></g>`;
+const lb=`<text class='lb' x='242' y='254'>Ya</text><text class='lb' x='156' y='314'>Tidak</text><text class='lb' x='156' y='724'>Ya</text><text class='lb' x='246' y='666'>Tidak</text>`;
+$('#fc2').innerHTML=`<svg viewBox='0 0 430 1060' role='img' aria-label='Flowchart kasir koperasi dengan 16 simbol'><defs><marker id='ar2' viewBox='0 0 10 10' refX='9' refY='5' markerWidth='7' markerHeight='7' orient='auto'><path d='M0,0L10,5L0,10z' fill='context-stroke'/></marker></defs>${ed}${nd}${an}${lb}</svg>`;
+$('#lg').innerHTML=LG.map((x,i)=>`<span id='lg-${x[0]}'>${i+1}. ${x[1]}</span>`).join('');
+let tm=[];
+function run2(){
+tm.forEach(clearTimeout);tm=[];
+document.querySelectorAll('#fc2 .on').forEach(x=>x.classList.remove('on'));
+document.querySelectorAll('#lg span').forEach(x=>x.classList.remove('seen'));
+$('#log2').innerHTML='';const res=$('#res2');res.hidden=true;
+const rt=$('#m-tot').value,ru=$('#m-uang').value,v=Number(rt),u=Number(ru),ang=$('#m-ang').value==='1';
+if(rt===''||ru===''||v<0||u<0){res.hidden=false;res.textContent='Isi total belanja dan uang diterima (0 atau lebih).';return}
+const pct=v>=100000?10:v>=50000?5:0,bon=ang?2:0,d=v*(pct+bon)/100,b=v-d,ok=u>=b;
+const e=i=>'m-e'+i,n=k=>'m-'+k;
+let p=[n('start'),e(0),n('prep'),e(1),n('io'),e(2),n('mop'),e(3),n('d1')];
+p=p.concat(ang?['m-ya',n('b2'),'m-b2a']:[e(4),n('b0'),e(5)]);
+p=p.concat([n('cA'),e(6),n('pre'),e(7),n('bayar'),e(8),n('disp'),e(9),n('minp'),e(10),n('d2')]);
+p=p.concat(ok?[e(11),n('kemb'),e(12),n('del'),e(13),n('doc'),e(14),n('db'),e(15),n('off'),e(16),n('end')]:['m-lp',n('minp')]);
+const L={start:'alur dimulai',prep:'total = 0, bonus = 0',io:'input total belanja = '+rp(v),mop:'kasir memeriksa kartu anggota',d1:'anggota? → '+(ang?'Ya':'Tidak'),b2:'bonus = 2%',b0:'bonus = 0%',cA:'kedua jalur bertemu di titik A',pre:`${pct}% + bonus ${bon}% = ${pct+bon}%, diskon ${rp(d)}`,bayar:`bayar = ${rp(v)} − ${rp(d)} = ${rp(b)}`,disp:'layar menampilkan '+rp(b),minp:'kasir mengetik uang diterima '+rp(u),d2:`${rp(u)} ≥ ${rp(b)}? → ${ok?'Ya':'Tidak'}`,kemb:'kembalian = '+rp(u-b),del:'printer menunggu 2 detik',doc:'struk dicetak',db:'transaksi disimpan ke basis data',off:'lanjut ke Laporan Harian di halaman 2',end:'alur selesai'};
+p.forEach((id,i)=>tm.push(setTimeout(()=>{
+const el=$('#'+id),k=id.slice(2);el.classList.add('on');
+const c=el.classList.contains('ed2')?'F':TY[k];
+if(c)$('#lg-'+c).classList.add('seen');
+if(k==='pre'){$('#m-an').classList.add('on');$('#lg-An').classList.add('seen')}
+if(L[k]){const li=document.createElement('li');li.textContent=NM[c]+': '+L[k];$('#log2').appendChild(li)}
+if(i===p.length-1){res.hidden=false;res.textContent=ok?`Diskon ${pct+bon}% = ${rp(d)}. Total bayar ${rp(b)}, kembalian ${rp(u-b)}.`:`Uang kurang ${rp(b-u)}. Alur kembali ke Input Manual; ubah uang diterima lalu jalankan lagi.`}
+},i*300)));
+}
+$('#m-go').onclick=run2;
+document.querySelectorAll('[data-p]').forEach(bt=>bt.onclick=()=>{const q=bt.dataset.p.split(',');$('#m-tot').value=q[0];$('#m-ang').value=q[1];$('#m-uang').value=q[2];run2()});
+})();
+
+// 3. Ordering
+const T0=['Mulai','Terminator'],T9=['Selesai','Terminator'],IO='Input/Output',PR='Proses',KP='Keputusan';
+const SP=[
+{p:'menghitung luas persegi panjang.',s:[T0,['Input panjang dan lebar',IO],['luas = panjang × lebar',PR],['Output luas',IO],T9]},
+{p:'menghitung keliling persegi.',s:[T0,['Input panjang sisi',IO],['keliling = 4 × sisi',PR],['Output keliling',IO],T9]},
+{p:'mengonversi suhu Celsius ke Fahrenheit.',s:[T0,['Input suhu Celsius',IO],['F = C × 1,8 + 32',PR],['Output suhu Fahrenheit',IO],T9]},
+{p:'menghitung rata-rata dua nilai.',s:[T0,['Input nilai 1 dan nilai 2',IO],['rata = (nilai 1 + nilai 2) / 2',PR],['Output rata-rata',IO],T9]},
+{p:'menghitung total bayar belanja.',s:[T0,['Input harga dan jumlah',IO],['total = harga × jumlah',PR],['Output total bayar',IO],T9]},
+{p:'menghitung kecepatan.',s:[T0,['Input jarak dan waktu',IO],['kecepatan = jarak / waktu',PR],['Output kecepatan',IO],T9]},
+{p:'menghitung luas segitiga (6 langkah).',s:[T0,['Input alas',IO],['Input tinggi',IO],['luas = 1/2 × alas × tinggi',PR],['Output luas',IO],T9]},
+{p:'menentukan lulus atau remedial.',s:[T0,['Input nilai',IO],['nilai ≥ 75?',KP],['Output Lulus / Remedial',IO],T9]},
+{p:'menentukan bilangan genap atau ganjil.',s:[T0,['Input bilangan',IO],['bilangan mod 2 = 0?',KP],['Output Genap / Ganjil',IO],T9]},
+{p:'menentukan boleh memilih atau belum (usia ≥ 17).',s:[T0,['Input usia',IO],['usia ≥ 17?',KP],['Output Boleh memilih / Belum',IO],T9]}
+].map(x=>({p:x.p,s:x.s.map(a=>({t:a[0],k:a[1]}))}));
+let S=SP[0].s,lastP=-1;
+let pool=[],ans=[];
+function chip(i,cls){const b=document.createElement("button");b.className="chip"+(cls?" "+cls:"");b.innerHTML=`${S[i].t}<small>${S[i].k}</small>`;return b}
+function drawS(marks){
+  $("#pool").innerHTML="";$("#ans").innerHTML="";
+  pool.forEach(i=>{const b=chip(i);b.onclick=()=>{pool=pool.filter(x=>x!==i);ans.push(i);$("#sfb").textContent="";drawS()};$("#pool").appendChild(b)});
+  ans.forEach((i,p)=>{const b=chip(i,marks?(i===p?"ok":"er"):"");b.onclick=()=>{ans=ans.filter(x=>x!==i);pool.push(i);$("#sfb").textContent="";drawS()};$("#ans").appendChild(b)});
+}
+function initS(){let j;do{j=Math.floor(Math.random()*SP.length)}while(j===lastP&&SP.length>1);lastP=j;S=SP[j].s;$("#sprob").textContent="Masalah: "+SP[j].p;pool=S.map((_,i)=>i).sort(()=>Math.random()-.5);if(pool.every((v,i)=>v===i))pool.reverse();ans=[];$("#sfb").textContent="";drawS()}
+$("#rst").onclick=initS;
+$("#chk").onclick=()=>{
+  if(ans.length<S.length){$("#sfb").textContent=`Lengkapi dulu: pindahkan semua ${S.length} kartu ke urutan jawaban.`;return}
+  const n=ans.filter((i,p)=>i===p).length;drawS(true);
+  $("#sfb").textContent=n===S.length?"Benar! Urutan sudah tepat: diawali Mulai, lalu input, proses atau keputusan, output, dan diakhiri Selesai.":`Baru ${n} dari ${S.length} kartu pada posisi yang tepat. Ketuk kartu merah untuk memindahkannya, lalu periksa lagi.`;
+};
+initS();
+
+// 3b. Extra games
+(function(){
+document.querySelectorAll('.gtab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.gtab').forEach(x=>x.setAttribute('aria-selected',x===b));['g1','g2','g3'].forEach(id=>$('#'+id).hidden=id!==b.dataset.g)});
+// Game 2: match symbols
+let mL=[],mR=[],mD=new Set(),mE=0,sl=null,sr=null,mB=null;
+function mk(i,side){const b=document.createElement('button'),cur=side==='l'?sl:sr,bad=mB&&(side==='l'?mB.l:mB.r)===i;
+b.className=(side==='l'?'sym':'chip')+(mD.has(i)?' okc':'')+(cur===i?' selc':'')+(bad?' erc':'');
+b.disabled=mD.has(i);
+if(side==='l')b.innerHTML=`<svg viewBox='0 0 80 60'>${SYM[i].s}</svg>`;else b.textContent=SYM[i].n;
+b.onclick=()=>{if(mB)return;if(side==='l')sl=i;else sr=i;mCheck()};return b}
+function mDraw(){
+$('#mL').replaceChildren(...mL.map(i=>mk(i,'l')));$('#mR').replaceChildren(...mR.map(i=>mk(i,'r')));
+$('#mfb').textContent=mD.size===mL.length?`Selesai! Salah ${mE} kali.${mE===0?' Sempurna!':''}`:`Pasangan benar: ${mD.size}/${mL.length} · Salah: ${mE}`}
+function mCheck(){
+if(sl===null||sr===null){mDraw();return}
+if(sl===sr){mD.add(sl);sl=sr=null;mDraw();return}
+mE++;mB={l:sl,r:sr};sl=sr=null;mDraw();setTimeout(()=>{mB=null;mDraw()},600)}
+function mInit(){const idx=SYM.map((_,i)=>i).sort(()=>Math.random()-.5).slice(0,6);mL=idx;mR=[...idx].sort(()=>Math.random()-.5);mD=new Set();mE=0;sl=sr=null;mB=null;mDraw()}
+$('#mrst').onclick=mInit;mInit();
+// Game 3: find the error
+const ERP=[
+{p:'Menghitung luas persegi panjang',s:[[0,'Mulai'],[1,'Input panjang dan lebar'],[1,'luas = panjang × lebar'],[2,'Output luas'],[0,'Selesai']],w:[1],e:'Input harus memakai jajar genjang (Input/Output), bukan persegi panjang (Proses).'},
+{p:'Menentukan lulus atau remedial',s:[[0,'Mulai'],[2,'Input nilai'],[1,'nilai ≥ 75?'],[2,'Output Lulus / Remedial'],[0,'Selesai']],w:[2],e:'Pengecekan kondisi harus memakai belah ketupat (Keputusan) dengan jalur Ya dan Tidak.'},
+{p:'Menghitung total bayar',s:[[0,'Mulai'],[2,'Input harga dan jumlah'],[2,'Output total bayar'],[1,'total = harga × jumlah'],[0,'Selesai']],w:[2,3],e:'Urutan salah: total bayar ditampilkan sebelum dihitung. Proses harus mendahului Output.'},
+{p:'Menentukan bilangan genap atau ganjil',s:[[0,'Mulai'],[2,'Input bilangan'],[3,'bilangan mod 2 = 0?'],[0,'Output Genap atau Ganjil'],[0,'Selesai']],w:[3],e:'Output memakai jajar genjang (Input/Output), bukan oval (Terminator). Oval hanya untuk Mulai dan Selesai.'},
+{p:'Menghitung rata-rata dua nilai',s:[[0,'Mulai'],[2,'Input nilai 1 dan nilai 2'],[1,'rata = (nilai 1 + nilai 2) / 2'],[1,'Output rata-rata'],[0,'Selesai']],w:[3],e:'Output harus memakai jajar genjang (Input/Output), bukan persegi panjang (Proses).'},
+{p:'Mengecek usia pemilih (usia ≥ 17)',s:[[0,'Mulai'],[3,'Input usia'],[3,'usia ≥ 17?'],[2,'Output Boleh memilih / Belum'],[0,'Selesai']],w:[1],e:'Input memakai jajar genjang (Input/Output). Belah ketupat hanya untuk pengecekan kondisi.'},
+{p:'Menghitung kecepatan',s:[[1,'Mulai'],[2,'Input jarak dan waktu'],[1,'kecepatan = jarak / waktu'],[2,'Output kecepatan'],[0,'Selesai']],w:[0],e:'Awal flowchart memakai oval (Terminator), bukan persegi panjang (Proses).'},
+{p:'Mengonversi suhu Celsius ke Fahrenheit',s:[[0,'Mulai'],[1,'F = C × 1,8 + 32'],[2,'Input suhu Celsius'],[2,'Output suhu Fahrenheit'],[0,'Selesai']],w:[1,2],e:'Urutan salah: suhu harus diinput dulu sebelum dihitung. Input mendahului Proses.'},
+{p:'Menghitung luas segitiga',s:[[0,'Mulai'],[2,'Input alas dan tinggi'],[1,'luas = 1/2 × alas × tinggi'],[2,'Output luas'],[3,'Selesai']],w:[4],e:'Akhir flowchart memakai oval (Terminator), bukan belah ketupat (Keputusan).'},
+{p:'Menentukan bilangan positif atau negatif',s:[[0,'Mulai'],[2,'Input bilangan'],[1,'bilangan > 0?'],[2,'Output Positif / Negatif'],[0,'Selesai']],w:[2],e:'Pengecekan kondisi harus memakai belah ketupat (Keputusan), bukan Proses.'}
+];
+const ER=[];function pickE(){ER.length=0;ERP.slice().sort(()=>Math.random()-.5).slice(0,4).forEach(c=>ER.push(c))}pickE();
+let ei=0,es=0;
+function eDraw(){
+const box=$('#ebox');box.dataset.d='0';
+if(ei>=ER.length){box.innerHTML=`<p><strong>Skor: ${es} dari ${ER.length}.</strong></p><button class='btn' id='erst'>Main lagi</button>`;$('#erst').onclick=()=>{pickE();ei=0;es=0;eDraw()};return}
+const r=ER[ei];box.innerHTML=`<p><strong>Kasus ${ei+1}/${ER.length}:</strong> ${r.p}</p>`;
+const list=document.createElement('div');list.className='mcol';
+r.s.forEach((st,i)=>{const b=document.createElement('button');b.className='sym st';b.innerHTML=`<svg viewBox='0 0 80 60'>${SYM[st[0]].s}</svg><span>${i+1}. ${st[1]}</span>`;
+b.onclick=()=>{if(box.dataset.d==='1')return;box.dataset.d='1';const ok=r.w.includes(i);if(ok)es++;
+b.classList.add(ok?'okc':'erc');if(!ok)r.w.forEach(j=>list.children[j].classList.add('okc'));
+const f=document.createElement('p');f.className='fb';f.textContent=(ok?'Tepat. ':'Belum tepat. ')+r.e;box.appendChild(f);
+const n=document.createElement('button');n.className='btn';n.textContent=ei===ER.length-1?'Lihat skor':'Lanjut';n.onclick=()=>{ei++;eDraw()};box.appendChild(n)};
+list.appendChild(b)});
+box.appendChild(list)}
+eDraw();
+})();
+
+// 3c. Project tab
+(function(){
+const TP=[['Mesin ATM: tarik tunai','Input PIN dan nominal. Jika PIN benar dan saldo cukup, saldo berkurang dan uang keluar; jika tidak, tampilkan pesan.','Dasar'],['Nilai akhir dan predikat','Input nilai tugas, UTS, dan UAS; hitung nilai akhir; predikat A (85 ke atas), B (70 ke atas), C (55 ke atas), selain itu D.','Dasar'],['Tarif parkir','Input lama parkir. Jam pertama Rp3.000, tiap jam berikutnya Rp2.000, tarif maksimal Rp15.000.','Menengah'],['Pesan makanan secara daring','Input harga pesanan dan jarak. Ongkir gratis bila belanja Rp100.000 atau lebih; selain itu ongkir ditentukan jarak.','Menengah'],['Peminjaman buku perpustakaan','Cek kartu anggota dan ketersediaan buku; maksimal 3 buku; denda bila terlambat.','Menengah'],['Login dengan 3 kali percobaan','Input kata sandi; boleh diulang paling banyak 3 kali; setelah itu akun terkunci (memakai perulangan).','Tantangan']];
+const box=$('#tps');
+function pick(i){box.querySelectorAll('.tp').forEach((x,j)=>x.classList.toggle('selc',j===i));$('#tpdet').innerHTML=`<strong>${i+1}. ${TP[i][0]}</strong> (${TP[i][2]})<br>${TP[i][1]}`}
+TP.forEach((t,i)=>{const b=document.createElement('button');b.className='chip tp';b.innerHTML=`${i+1}. ${t[0]}<small>${t[2]}</small>`;b.onclick=()=>pick(i);box.appendChild(b)});
+$('#tprnd').onclick=()=>pick(Math.floor(Math.random()*TP.length));
+const ST=['A. Tulis judul proyek, nama, kelas, dan tanggal.','B. Tulis deskripsi masalah (2-3 kalimat).','C. Buat tabel kecil: Input, Proses, Output.','D. Gambar flowchart: ada Mulai dan Selesai, minimal 6 jenis simbol, minimal 1 Keputusan berlabel Ya/Tidak, lalu tulis daftar simbol yang dipakai.','E. Uji alur dengan minimal 3 data uji (jalur Ya dan jalur Tidak), catat hasilnya dalam tabel.','F. Tulis refleksi 2-3 kalimat: bagian tersulit dan apa yang diperbaiki.'];
+function upd(){const n=document.querySelectorAll('#ck input:checked').length;$('#ckp').textContent=n===ST.length?'Semua langkah selesai. Periksa lagi kerapian buku Anda, lalu kumpulkan.':`Selesai ${n} dari ${ST.length} langkah.`}
+ST.forEach(s=>{const l=document.createElement('label');l.innerHTML=`<input type='checkbox'><span>${s}</span>`;l.firstChild.onchange=upd;$('#ck').appendChild(l)});
+upd();
+})();
+
+// 4. Quiz
+const Q=[
+ {q:"Simbol yang menandai awal dan akhir flowchart adalah …",o:["Proses","Terminator","Keputusan","Konektor"],a:1,e:"Terminator (oval) dipakai untuk Mulai dan Selesai."},
+ {q:"Simbol belah ketupat digunakan untuk …",o:["Perhitungan","Input data","Mengecek kondisi","Menyambung halaman"],a:2,e:"Belah ketupat adalah simbol keputusan dengan jalur Ya dan Tidak."},
+ {q:"Simbol jajar genjang menyatakan …",o:["Input atau output","Awal program","Perulangan","Arah alir"],a:0,e:"Jajar genjang dipakai untuk memasukkan data atau menampilkan hasil."},
+ {q:"Alur: Input nilai → nilai ≥ 75? → Ya: “Lulus”; Tidak: “Remedial”. Jika nilai = 70, keluarannya …",o:["Lulus","Remedial","Error","Tidak ada"],a:1,e:"70 < 75, sehingga jalur “Tidak” dan keluarannya “Remedial”."},
+ {q:"Struktur algoritma yang memilih jalur berdasarkan kondisi disebut …",o:["Sekuensial","Percabangan","Perulangan","Konstanta"],a:1,e:"Percabangan (seleksi) memilih jalur sesuai hasil pengecekan kondisi."},
+ {q:"Pada sistem diskon koperasi, belanja Rp75.000 menghasilkan total bayar …",o:["Rp75.000","Rp71.250","Rp67.500","Rp65.000"],a:1,e:"75.000 masuk diskon 5% = 3.750, sehingga bayar 71.250."},
+ {q:"Setiap simbol keputusan memiliki … cabang keluar.",o:["1","2","3","4"],a:1,e:"Dua cabang: “Ya” dan “Tidak”."}
+];
+let qi=0,sc=0;
+function showQ(){
+  $("#qb").style.width=(qi/Q.length*100)+"%";
+  const box=$("#qbox");
+  if(qi>=Q.length){
+    const p=Math.round(sc/Q.length*100);
+    box.innerHTML=`<p><strong>Skor Anda: ${sc} dari ${Q.length} (${p}).</strong></p><p>${p>=75?"Mantap! Anda sudah menguasai dasar flowchart.":"Ulangi tab Kenali Simbol dan Simulasi Alur, lalu coba lagi."}</p><button class="btn" id="rq">Ulangi kuis</button>`;
+    $("#rq").onclick=()=>{qi=0;sc=0;showQ()};return;
+  }
+  const q=Q[qi];
+  box.innerHTML=`<p><strong>Soal ${qi+1}/${Q.length}.</strong> ${q.q}</p>`;
+  q.o.forEach((t,i)=>{const b=document.createElement("button");b.className="opt";b.textContent=t;
+    b.onclick=()=>{
+      box.querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;if(j===q.a)x.classList.add("ok");else if(j===i)x.classList.add("er")});
+      if(i===q.a)sc++;
+      const f=document.createElement("p");f.className="fb";f.textContent=(i===q.a?"Tepat. ":"Belum tepat. ")+q.e;box.appendChild(f);
+      const n=document.createElement("button");n.className="btn";n.textContent=qi===Q.length-1?"Lihat skor":"Lanjut";n.onclick=()=>{qi++;showQ()};box.appendChild(n);
+    };box.appendChild(b)});
+}
+showQ();
+</script>
+</body>
+</html>
